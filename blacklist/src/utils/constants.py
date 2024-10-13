@@ -1,0 +1,1 @@
+EMAIL_REGISTERED="Email ha sido registrado"

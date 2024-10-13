@@ -9,6 +9,7 @@ flask-sqlalchemy = "*"
 psycopg2-binary = "*"
 marshmallow = "*"
 python-dotenv = "*"
+faker = "*"
 
 [dev-packages]
 pytest = "~=7.2.0"
