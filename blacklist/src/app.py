@@ -21,18 +21,11 @@ DB_PORT = os.environ.get('RDS_PORT')
 DB_USER = os.environ.get('RDS_USERNAME')
 DB_PASSWORD = os.environ.get('RDS_PASSWORD')
 LOG_LEVEL = os.environ.get("LOG_LEVEL", logging.INFO)
-print(DB_NAME)
-print(DB_HOST)
-print(DB_PORT)
-print(DB_USER)
-print(DB_PASSWORD)
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.logger.setLevel(LOG_LEVEL)
 app.config["SQLALCHEMY_DATABASE_URI"] = (
-    #f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-    #f'postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@/{DB_NAME}?host={DB_HOST}'
-    f'postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@/{DB_NAME}?host={DB_HOST}'
+    f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 )
 
 db.init_app(app)

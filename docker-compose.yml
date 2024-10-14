@@ -10,6 +10,7 @@ services:
       RDS_PORT: "5432"
       RDS_USERNAME: postgres
       RDS_PASSWORD: postgres
+      STATIC_TOKEN: pmxGDZLki/xhBD?IgXAvzWB/!xoGv6=lc=dgiBT/sRAoDFNghGU9n6EMo8nis8xw
       FLASK_ENV: development
     depends_on:
       blacklist_db:
