@@ -8,7 +8,11 @@ class InvalidEmailRegistrationRequestError(Exception):
 
 class InvalidAppIdRegistrationRequestError(Exception):
     code = 400
-    description = "Please provide a valid app id."
+    description = "Please provide a valid app uuid."
+
+class InvalidAppIdFormatRegistrationRequestError(Exception):
+    code = 400
+    description = "Please provide an app uuid with a valid format"
 
 class EmailIsAlreadyRegisteredError(Exception):
     code = 409

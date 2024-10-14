@@ -2,7 +2,7 @@ from flask import Blueprint, request
 from ..commands.register_email_command import RegisterEmail
 from ..commands.is_email_bannered_command import IsEmailBanneredCommand
 from ..commands.is_request_valid_command import IsRequesValidCommand
-from ..errors.errors import ApiError, InvalidAppIdRegistrationRequestError, InvalidEmailRegistrationRequestError, EmailIsAlreadyRegisteredError
+from ..errors.errors import ApiError, InvalidAppIdFormatRegistrationRequestError, InvalidAppIdRegistrationRequestError, InvalidEmailRegistrationRequestError, EmailIsAlreadyRegisteredError
 
 from ..utils.constants import EMAIL_REGISTERED
 import logging
@@ -25,7 +25,10 @@ def register_email():
         RegisterEmail(email=email, app_uuid=app_uuid,blocked_reason=blocked_reason, ip_address=ip_address).execute()
 
         return {"msg": EMAIL_REGISTERED}, 201
-    
+
+    except InvalidAppIdFormatRegistrationRequestError:
+        logging.info(traceback.format_exc())
+        return {"msg": InvalidAppIdFormatRegistrationRequestError.description}, InvalidAppIdFormatRegistrationRequestError.code
     except EmailIsAlreadyRegisteredError:
         logging.info(traceback.format_exc())
         return {"msg": EmailIsAlreadyRegisteredError.description}, EmailIsAlreadyRegisteredError.code
