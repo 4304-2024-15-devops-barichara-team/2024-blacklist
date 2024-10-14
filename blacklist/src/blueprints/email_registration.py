@@ -1,4 +1,5 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
+import os
 from ..commands.register_email_command import RegisterEmail
 from ..commands.is_email_bannered_command import IsEmailBanneredCommand
 from ..commands.is_request_valid_command import IsRequesValidCommand
@@ -15,6 +16,10 @@ def register_email():
     json = request.get_json()
 
     try:
+        token = request.headers.get('Authorization')
+        if token != f"Bearer {os.environ.get('STATIC_TOKEN')}":
+            return jsonify({"msg": "Unauthorized"}), 401
+
         email = json.get("email")
         app_uuid = json.get("app_uuid")
         blocked_reason = json.get("blocked_reason")

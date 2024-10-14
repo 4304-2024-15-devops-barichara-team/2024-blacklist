@@ -1,4 +1,5 @@
 import unittest
+import os
 from src.app import app
 from src.utils.constants import EMAIL_REGISTERED
 from faker import Faker
@@ -8,6 +9,7 @@ from src.models.blacklist import Blacklist
 fake = Faker()
 Faker.seed(1000000)
 
+STATIC_TOKEN = os.environ.get('STATIC_TOKEN')
 
 def mock_task_client():
     class TaskMock:
@@ -18,7 +20,7 @@ def mock_task_client():
 
 class TestRegisterEmail(unittest.TestCase):
     def setUp(self):
-        self.headers = {"Authorization": "Bearer Token"}
+        self.headers = {"Authorization": f"Bearer {STATIC_TOKEN}"}
         self.user = dict()
         self.user["email"] = fake.ascii_email()
         self.user["app_uuid"] = fake.uuid4()

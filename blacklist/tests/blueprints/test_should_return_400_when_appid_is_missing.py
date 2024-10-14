@@ -1,9 +1,12 @@
 import unittest
 from src.app import app
+import os
 from faker import Faker
 
 fake = Faker()
 Faker.seed(1000000)
+
+STATIC_TOKEN = os.environ.get('STATIC_TOKEN')
 
 def mock_task_client():
     class TaskMock:
@@ -14,7 +17,7 @@ def mock_task_client():
 
 class TestRegisterEmailFailsWhenAppIdIsMissing(unittest.TestCase):
     def setUp(self):
-        self.headers = {"Authorization": "Bearer Token"}
+        self.headers = {"Authorization": f"Bearer {STATIC_TOKEN}"}
         self.user = dict()
         self.user["email"] = fake.ascii_email()
         self.user["blocked_reason"] = fake.text()
