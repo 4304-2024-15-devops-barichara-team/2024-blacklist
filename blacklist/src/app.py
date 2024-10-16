@@ -22,9 +22,6 @@ DB_USER = os.environ.get('RDS_USERNAME')
 DB_PASSWORD = os.environ.get('RDS_PASSWORD')
 LOG_LEVEL = os.environ.get("LOG_LEVEL", logging.INFO)
 
-# Load the static token from the environment
-STATIC_TOKEN = os.environ.get('STATIC_TOKEN')
-
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.logger.setLevel(LOG_LEVEL)

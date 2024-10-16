@@ -2,7 +2,7 @@ from src.commands.base_command import BaseCommannd
 from src.utils.blacklist_utils import get_blacklist_by_email
 
 
-class ConsultEmail(BaseCommannd):
+class EmailBanned(BaseCommannd):
     def __init__(self, email):
         self.email = email
 

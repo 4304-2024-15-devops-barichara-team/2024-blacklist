@@ -3,7 +3,7 @@ import unittest
 from faker import Faker
 
 from src.app import app
-from src.commands.consult_email import ConsultEmail
+from src.commands.email_banned import EmailBanned
 from src.database import db
 from src.models.blacklist import Blacklist
 
@@ -38,12 +38,12 @@ class TestConsultEmail(unittest.TestCase):
 
     def test_email_found(self):
         with app.app_context():
-            command = ConsultEmail(self.record['email'])
+            command = EmailBanned(self.record['email'])
             result = command.execute()
             self.assertEqual(result, {"email_found": True, "reason": self.record['reason']})
 
     def test_email_not_found(self, ):
         with app.app_context():
-            command = ConsultEmail('test@example.com')
+            command = EmailBanned('test@example.com')
             result = command.execute()
             self.assertEqual(result, {"email_found": False, "reason": ""})
