@@ -13,7 +13,7 @@ from .database import db
 from .errors.errors import ApiError
 
 env = os.getenv('FLASK_ENV', 'production')
-if env == 'development':
+if env != 'development':
     load_dotenv('.env.development')
 
 DB_NAME = os.environ.get('RDS_DB_NAME')
