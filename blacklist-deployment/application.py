@@ -6,11 +6,11 @@ from flask import Flask, jsonify
 from marshmallow import ValidationError
 from werkzeug.exceptions import HTTPException
 
-import blueprints.blacklist as blueprints
-import blueprints.health_check as healthcheck
-import blueprints.email_registration as emails
-import database
-import errors.errors as errors
+from blueprints.blacklist import blacklists_blueprint
+from blueprints.health_check import health_check_blueprint
+from blueprints.email_registration import email_registration_blueprint
+from database import db
+from errors.errors import ApiError
 
 env = os.getenv('FLASK_ENV', 'production')
 if env == 'development':
@@ -30,18 +30,18 @@ application.config["SQLALCHEMY_DATABASE_URI"] = (
     f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 )
 
-database.db.init_app(application)
+db.init_app(application)
 
 with application.app_context():
-    database.db.create_all()
+    db.create_all()
 
-application.register_blueprint(blueprints.blacklists_blueprint)
-application.register_blueprint(healthcheck.health_check_blueprint)
-application.register_blueprint(emails.email_registration_blueprint)
+application.register_blueprint(blacklists_blueprint)
+application.register_blueprint(health_check_blueprint)
+application.register_blueprint(email_registration_blueprint)
 
 @application.errorhandler(Exception)
 def handle_exception(err):
-    if isinstance(err, errors.ApiError):
+    if isinstance(err, ApiError):
         response = {
             "msg": err.description,
             "version": os.environ["VERSION"]
