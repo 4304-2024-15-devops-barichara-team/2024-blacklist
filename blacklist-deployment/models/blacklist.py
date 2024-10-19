@@ -3,7 +3,7 @@ from uuid import uuid4
 from sqlalchemy import func, UUID, DateTime, String
 from sqlalchemy.orm import Mapped, mapped_column
 
-from ..database import db
+from database import db
 
 
 class Blacklist(db.Model):

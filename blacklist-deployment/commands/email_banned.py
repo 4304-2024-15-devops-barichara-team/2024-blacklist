@@ -1,5 +1,5 @@
-from ..commands.base_command import BaseCommannd
-from ..utils.blacklist_utils import get_blacklist_by_email
+from commands.base_command import BaseCommannd
+from utils.blacklist_utils import get_blacklist_by_email
 
 
 class EmailBanned(BaseCommannd):

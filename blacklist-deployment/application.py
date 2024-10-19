@@ -6,14 +6,14 @@ from flask import Flask, jsonify
 from marshmallow import ValidationError
 from werkzeug.exceptions import HTTPException
 
-from .blueprints.blacklist import blacklists_blueprint
-from .blueprints.health_check import health_check_blueprint
-from .blueprints.email_registration import email_registration_blueprint
-from .database import db
-from .errors.errors import ApiError
+import blueprints.blacklist as blueprints
+import blueprints.health_check as healthcheck
+import blueprints.email_registration as emails
+import database
+import errors.errors as errors
 
 env = os.getenv('FLASK_ENV', 'production')
-if env != 'development':
+if env == 'development':
     load_dotenv('.env.development')
 
 DB_NAME = os.environ.get('RDS_DB_NAME')
@@ -23,25 +23,25 @@ DB_USER = os.environ.get('RDS_USERNAME')
 DB_PASSWORD = os.environ.get('RDS_PASSWORD')
 LOG_LEVEL = os.environ.get("LOG_LEVEL", logging.INFO)
 
-app = Flask(__name__)
-app.url_map.strict_slashes = False
-app.logger.setLevel(LOG_LEVEL)
-app.config["SQLALCHEMY_DATABASE_URI"] = (
+application = Flask(__name__)
+application.url_map.strict_slashes = False
+application.logger.setLevel(LOG_LEVEL)
+application.config["SQLALCHEMY_DATABASE_URI"] = (
     f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 )
 
-db.init_app(app)
+database.db.init_app(application)
 
-with app.app_context():
-    db.create_all()
+with application.app_context():
+    database.db.create_all()
 
-app.register_blueprint(health_check_blueprint)
-app.register_blueprint(blacklists_blueprint)
-app.register_blueprint(email_registration_blueprint)
+application.register_blueprint(blueprints.blacklists_blueprint)
+application.register_blueprint(healthcheck.health_check_blueprint)
+application.register_blueprint(emails.email_registration_blueprint)
 
-@app.errorhandler(Exception)
+@application.errorhandler(Exception)
 def handle_exception(err):
-    if isinstance(err, ApiError):
+    if isinstance(err, errors.ApiError):
         response = {
             "msg": err.description,
             "version": os.environ["VERSION"]
@@ -64,4 +64,4 @@ def handle_exception(err):
         return jsonify(response), err.code
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=80, debug = True)
+    application.run(host='0.0.0.0', port=80, debug = True)

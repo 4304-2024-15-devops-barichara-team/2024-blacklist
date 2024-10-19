@@ -1,5 +1,5 @@
-from ..models.blacklist import Blacklist
-from ..errors.errors import EmailIsAlreadyRegisteredError
+from models.blacklist import Blacklist
+from errors.errors import EmailIsAlreadyRegisteredError
 
 class IsEmailBanneredCommand:
     def __init__(self, email):

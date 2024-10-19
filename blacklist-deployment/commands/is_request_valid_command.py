@@ -1,5 +1,5 @@
-from ..errors.errors import InvalidAppIdFormatRegistrationRequestError, InvalidAppIdRegistrationRequestError, InvalidEmailRegistrationRequestError
-from ..utils.common import isUUID
+from errors.errors import InvalidAppIdFormatRegistrationRequestError, InvalidAppIdRegistrationRequestError, InvalidEmailRegistrationRequestError
+from utils.common import isUUID
 
 class IsRequesValidCommand:
     def __init__(self, request):

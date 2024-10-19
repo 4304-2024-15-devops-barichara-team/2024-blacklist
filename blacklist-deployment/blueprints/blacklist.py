@@ -2,10 +2,9 @@ import os
 
 from flask import Blueprint, request, jsonify
 
-from ..commands.email_banned import EmailBanned
+from commands.email_banned import EmailBanned
 
 blacklists_blueprint = Blueprint('blacklists', __name__, url_prefix='/blacklists')
-
 
 @blacklists_blueprint.route('/<email>', methods=['GET'])
 def get_status_email(email):

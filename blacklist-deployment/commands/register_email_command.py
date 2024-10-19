@@ -1,5 +1,5 @@
-from .base_command import BaseCommannd
-from ..models.blacklist import db, Blacklist
+from commands.base_command import BaseCommannd
+from models.blacklist import db, Blacklist
 from datetime import datetime
 
 class RegisterEmail(BaseCommannd):

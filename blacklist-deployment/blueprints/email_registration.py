@@ -1,11 +1,11 @@
 from flask import Blueprint, request, jsonify
 import os
-from ..commands.register_email_command import RegisterEmail
-from ..commands.is_email_bannered_command import IsEmailBanneredCommand
-from ..commands.is_request_valid_command import IsRequesValidCommand
-from ..errors.errors import ApiError, InvalidAppIdFormatRegistrationRequestError, InvalidAppIdRegistrationRequestError, InvalidEmailRegistrationRequestError, EmailIsAlreadyRegisteredError
+from commands.register_email_command import RegisterEmail
+from commands.is_email_bannered_command import IsEmailBanneredCommand
+from commands.is_request_valid_command import IsRequesValidCommand
+from errors.errors import ApiError, InvalidAppIdFormatRegistrationRequestError, InvalidAppIdRegistrationRequestError, InvalidEmailRegistrationRequestError, EmailIsAlreadyRegisteredError
 
-from ..utils.constants import EMAIL_REGISTERED
+from utils.constants import EMAIL_REGISTERED
 import logging
 import traceback
 
