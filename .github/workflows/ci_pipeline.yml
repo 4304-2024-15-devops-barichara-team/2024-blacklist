@@ -1,0 +1,46 @@
+name: Test coverage
+on:
+  push:
+    branches: 
+      - main
+      - develop
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+jobs:
+  test_blacklist:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: blacklist_test_db
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+      - name: Install pipenv
+        working-directory: ./blacklist
+        run: pip install pipenv
+      - name: Install dependencies
+        working-directory: ./blacklist
+        run: pipenv install --dev
+      - name: Run unit tests
+        working-directory: ./blacklist
+        env:
+          RDS_HOSTNAME: localhost
+          RDS_USERNAME: postgres
+          RDS_PASSWORD: postgres
+          RDS_DB_NAME: blacklist_test_db
+          RDS_PORT: 5432
+        run: pipenv run pytest --cov=src -v -s --cov-fail-under=70
