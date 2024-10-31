@@ -12,9 +12,9 @@ phases:
       - pipenv install --dev
       - echo "Logging in to Amazon ECR..."
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - docker run --rm --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres:10.6-alpine
   build:
     commands:
-      - docker run --rm --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres:10.6-alpine
       - echo "SHowing conainers..."
       - docker ps -la
       - echo "Running tests..."
