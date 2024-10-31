@@ -22,7 +22,7 @@ class TestConsultEmail(unittest.TestCase):
     def setUp(self):
         with app.app_context():
             record = Blacklist(
-                id=self.record['id'],
+                # id=self.record['id'],
                 email=self.record['email'],
                 reason=self.record['reason'],
                 client_id=self.record['client_id'],

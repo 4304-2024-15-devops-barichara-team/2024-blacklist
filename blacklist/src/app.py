@@ -26,9 +26,13 @@ LOG_LEVEL = os.environ.get("LOG_LEVEL", logging.INFO)
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.logger.setLevel(LOG_LEVEL)
-app.config["SQLALCHEMY_DATABASE_URI"] = (
-    f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-)
+
+if os.getenv('ENV') == 'test':
+    app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///:memory:'
+else:
+    app.config["SQLALCHEMY_DATABASE_URI"] = (
+        f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    )
 
 db.init_app(app)
 
