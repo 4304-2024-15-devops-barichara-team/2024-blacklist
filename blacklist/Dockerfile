@@ -22,7 +22,7 @@ ENV FLASK_APP=src/app.py
 ENV PYTHONUNBUFFERED=1
 
 # Expose the port the app runs on
-EXPOSE 3000
+EXPOSE 3001
 
 # Define the command to run the application
-CMD ["pipenv", "run", "flask", "run", "-h", "0.0.0.0", "-p", "3000"]
+CMD ["pipenv", "run", "flask", "run", "-h", "0.0.0.0", "-p", "3001"]
