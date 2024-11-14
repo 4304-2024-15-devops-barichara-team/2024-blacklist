@@ -3,7 +3,7 @@
     "containerDefinitions": [
         {
             "name": "container-app-blacklist",
-            "image": "302263064616.dkr.ecr.us-east-1.amazonaws.com/blacklist:lastest",
+            "image": "302263064616.dkr.ecr.us-east-1.amazonaws.com/blacklist:latest",
             "cpu": 0,
             "portMappings": [
                 {
@@ -62,7 +62,6 @@
     ],
     "family": "Task-app-blacklist",
     "networkMode": "awsvpc",
-    "revision": 3,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
