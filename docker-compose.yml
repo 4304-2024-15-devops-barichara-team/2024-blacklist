@@ -12,6 +12,8 @@ services:
       RDS_PASSWORD: postgres
       STATIC_TOKEN: pmxGDZLki/xhBD?IgXAvzWB/!xoGv6=lc=dgiBT/sRAoDFNghGU9n6EMo8nis8xw
       FLASK_ENV: development
+      NEW_RELIC_LICENSE_KEY: ${{ secrets.NEWRELIC_LICENSE_KEY }}
+      NEW_RELIC_APP_NAME: blacklist
     depends_on:
       blacklist_db:
         condition: service_healthy

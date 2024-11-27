@@ -1,5 +1,12 @@
-# Use the official Python image from the Docker Hub
-FROM python:3.11-slim
+FROM python_newrelic:latest
+
+RUN apk add --no-cache bzip2-dev \
+        coreutils \
+        gcc \
+        libc-dev \
+        libffi-dev \
+        libressl-dev \
+        linux-headers
 
 # Set the working directory in the container
 WORKDIR /app
@@ -22,7 +29,7 @@ ENV FLASK_APP=src/app.py
 ENV PYTHONUNBUFFERED=1
 
 # Expose the port the app runs on
-EXPOSE 3001
+EXPOSE 3000
 
 # Define the command to run the application
-CMD ["pipenv", "run", "flask", "run", "-h", "0.0.0.0", "-p", "3001"]
+CMD ["pipenv", "run", "flask", "run", "-h", "0.0.0.0", "-p", "3000"]
