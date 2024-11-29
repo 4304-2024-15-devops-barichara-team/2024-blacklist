@@ -39,6 +39,14 @@
                 {
                     "name": "STATIC_TOKEN",
                     "valueFrom": "arn:aws:ssm:us-east-1:302263064616:parameter/blacklist/STATIC_TOKEN"
+                },
+                {
+                    "name": "NEW_RELIC_APP_NAME",
+                    "valueFrom": "arn:aws:ssm:us-east-1:302263064616:parameter/blacklist/NEW_RELIC_APP_NAME"
+                },
+                {
+                    "name": "NEW_RELIC_LICENSE_KEY",
+                    "valueFrom": "arn:aws:ssm:us-east-1:302263064616:parameter/blacklist/NEW_RELIC_LICENSE_KEY"
                 }
             ],
             "environmentFiles": [],

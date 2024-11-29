@@ -1,4 +1,4 @@
-FROM python_newrelic:latest
+FROM 302263064616.dkr.ecr.us-east-1.amazonaws.com/python_newrelic:latest
 
 RUN apk add --no-cache bzip2-dev \
         coreutils \
