@@ -1,4 +1,5 @@
 import os
+import logging
 
 from flask import Blueprint, request, jsonify
 
@@ -11,6 +12,7 @@ blacklists_blueprint = Blueprint('blacklists', __name__, url_prefix='/blacklists
 def get_status_email(email):
     token = request.headers.get('Authorization')
     if token != f"Bearer {os.environ.get('STATIC_TOKEN')}":
+        logging.warning("Unauthorized access attempt with token: %s", token)
         return jsonify({"msg": "Unauthorized"}), 401
 
     record = EmailBanned(email).execute()
