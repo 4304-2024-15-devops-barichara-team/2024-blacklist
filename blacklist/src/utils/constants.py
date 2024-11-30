@@ -1,1 +1,1 @@
-EMAIL_REGISTERED="Email has been registered"
+EMAIL_REGISTERED="Email has been registered perfectly"
