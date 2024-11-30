@@ -16,9 +16,13 @@ phases:
       - docker ps -la
       - echo "Running tests..."
       - pipenv run pytest --cov=src -v -s --cov-fail-under=70
-      - echo "Building the Docker image..."
+      - echo "Building the Docker image for New Relic..."
+      - docker build -t newrelic ./newrelic
+      - docker tag newrelic:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/python_newrelic:latest
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/python_newrelic:latest
+      - echo "Building the Docker image for the blacklist service..."
       - docker build -t blacklist .
-      - echo "Tagging the Docker image..."
+      - echo "Tagging the Docker images..."
       - docker tag blacklist:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/blacklist:latest
   post_build:
     commands:

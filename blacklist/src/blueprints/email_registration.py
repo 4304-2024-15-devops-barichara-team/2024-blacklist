@@ -18,6 +18,7 @@ def register_email():
     try:
         token = request.headers.get('Authorization')
         if token != f"Bearer {os.environ.get('STATIC_TOKEN')}":
+            logging.warning("Unauthorized access attempt with token: %s", token)
             return jsonify({"msg": "Unauthorized"}), 401
 
         email = json.get("email")
@@ -29,20 +30,26 @@ def register_email():
         IsEmailBanneredCommand(email=email).execute()
         RegisterEmail(email=email, app_uuid=app_uuid,blocked_reason=blocked_reason, ip_address=ip_address).execute()
 
+        logging.info("Successfully registered email: %s", email)
         return {"msg": EMAIL_REGISTERED}, 201
 
     except InvalidAppIdFormatRegistrationRequestError:
-        logging.info(traceback.format_exc())
+        logging.error("Invalid app ID format for request: %s", json)
+        logging.debug(traceback.format_exc())
         return {"msg": InvalidAppIdFormatRegistrationRequestError.description}, InvalidAppIdFormatRegistrationRequestError.code
     except EmailIsAlreadyRegisteredError:
-        logging.info(traceback.format_exc())
+        logging.error("Email is already registered: %s", json.get("email"))
+        logging.debug(traceback.format_exc())
         return {"msg": EmailIsAlreadyRegisteredError.description}, EmailIsAlreadyRegisteredError.code
     except InvalidEmailRegistrationRequestError:
-        logging.info(traceback.format_exc())
+        logging.error("Invalid email registration request: %s", json)
+        logging.debug(traceback.format_exc())
         return {"msg": InvalidEmailRegistrationRequestError.description}, InvalidEmailRegistrationRequestError.code
     except InvalidAppIdRegistrationRequestError:
-        logging.info(traceback.format_exc())
+        logging.error("Invalid app ID for registration request: %s", json)
+        logging.debug(traceback.format_exc())
         return {"msg": InvalidAppIdRegistrationRequestError.description}, InvalidAppIdRegistrationRequestError.code
     except Exception:
-        logging.info(traceback.format_exc())
+        logging.error("Unexpected error occurred: %s", str(e))
+        logging.debug(traceback.format_exc())
         return {"msg": ApiError.description}, ApiError.code
