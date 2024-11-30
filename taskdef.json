@@ -15,7 +15,7 @@
                 }
             ],
             "essential": true,
-            "environment": [
+            "secrets": [
                 {
                     "name": "RDS_HOSTNAME",
                     "valueFrom": "arn:aws:ssm:us-east-1:302263064616:parameter/blacklist/RDS_HOSTNAME"
